@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useContext} from 'react';
+import Header from './components/Header';
+import { DataContext } from "./Context/DataProvider";
+import Editor from "./components/Editor"
+import DataProvider from './Context/DataProvider';
+import Result from './components/Result';
+import { Route,Routes } from "react-router-dom";
 
-function App() {
+
+const App=()=> {
+  const { html, css, js, setHtml, setCss, setJs } = useContext(DataContext);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   <>
+   <DataProvider initialHtml="" initialCss="" initialJs="">
+       <Header/>
+       <Routes>
+        <Route  path="/" element={<Editor
+        language="xml"
+        heading="HTML"
+        icon="/"
+        color="#FF3C41"
+       />} />
+        <Route path="/css" element={<Editor
+         language="css"
+        heading="CSS"
+        icon="*"
+        color="#0EBEFF"
+        />      
+        }/>
+        <Route path="/javascript" element={
+           <Editor
+           language="javascript"
+           heading="Js"
+           icon="<>"
+           color="#FCD000"
+          />
+        }/>
+        <Route path="/output"
+        element={<Result/>}/>
+       </Routes>
+   </DataProvider>
+      
+   </>
+  )
 }
-
 export default App;
